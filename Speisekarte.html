@@ -129,9 +129,9 @@
 
     .tiles {
       margin-top: 2rem;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-gap: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
     }
 
     .tile {
@@ -150,19 +150,6 @@
 
     .tile:nth-child(1) { animation-delay: 0.2s; }
     .tile:nth-child(2) { animation-delay: 0.4s; }
-    .tile:nth-child(3) { animation-delay: 0.6s; }
-    .tile:nth-child(4) { animation-delay: 0.8s; }
-
-    .tile.lage {
-      padding-bottom: 1rem;
-    }
-
-    /* Neue Kacheln für Allergene und Speisekarte */
-    .tile.allergene, .tile.speisekarte {
-      grid-column: span 2;
-      background-color: #f7f1e9;
-      animation-delay: 1s;
-    }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
@@ -194,51 +181,21 @@
 
     <main class="content" id="content">
       <div class="hero">
-        <h1>Speisekarte</h1>
+        <h1>Traditionshaus Seeblick</h1>
       </div>
 
       <div class="tiles">
-
+        <!-- Kachel für Speisekarte -->
         <div class="tile">
-          <strong>🥗 Vorspeisen</strong>
-          <p>Leckere Vorspeisen aus frischen Zutaten – der perfekte Auftakt für Ihr Menü.</p>
-        </div>
-
-        <div class="tile">
-          <strong>🐟 Fisch</strong>
-          <p>Unser Fang des Tages – frisch und in verschiedenen Variationen zubereitet.</p>
-        </div>
-
-        <div class="tile">
-          <strong>🥩 Fleisch</strong>
-          <p>Saftige Fleischgerichte, die den Gaumen verwöhnen – perfekt für Fleischliebhaber.</p>
-        </div>
-
-        <div class="tile">
-          <strong>🍰 Desserts</strong>
-          <p>Süße Versuchungen, die jedes Menü abrunden – für den süßen Abschluss.</p>
-        </div>
-
-        <div class="tile">
-          <strong>🥤 Getränke</strong>
-          <p>Erfrischende Getränke und ausgewählte Weine, die Ihr Menü begleiten.</p>
-        </div>
-
-        <div class="tile">
-          <strong>🍦 Eis & Café</strong>
-          <p>Erfrischende Eisbecher und leckere Kaffeespezialitäten für den perfekten Genuss.</p>
-        </div>
-
-        <div class="tile speisekarte">
           <strong>🍽️ Speisekarte</strong>
-          <p>Hier finden Sie die Auswahl an leckeren Gerichten, die wir zu bieten haben – von Vorspeisen bis zu Desserts.</p>
+          <p>Entdecken Sie unsere leckeren Gerichte aus regionalen Zutaten. Wählen Sie aus einer Vielzahl an Hauptgerichten, Vorspeisen und Desserts.</p>
         </div>
 
-        <div class="tile allergene">
+        <!-- Kachel für Allergene -->
+        <div class="tile">
           <strong>🧾 Allergene</strong>
-          <p>Eine Übersicht zu enthaltenen Allergenen finden Sie direkt bei den jeweiligen Gerichten oder auf Nachfrage bei unserem Personal.</p>
+          <p>Alle Gerichte sind nach Allergenen und Zutaten aufgeschlüsselt. Bei speziellen Wünschen sprechen Sie bitte unser Personal an.</p>
         </div>
-
       </div>
     </main>
   </div>

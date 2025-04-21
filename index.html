@@ -52,16 +52,17 @@
     }
 
     .sidebar {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 250px;
-      height: 100vh;
+      height: 100%;
       background-color: var(--sidebar-bg);
       padding: 2rem 1rem;
       box-shadow: 2px 0 5px rgba(0,0,0,0.05);
       transition: transform 0.3s ease, opacity 0.3s ease;
       z-index: 10;
+      overflow-y: auto;
     }
 
     .sidebar.hidden {
@@ -130,6 +131,7 @@
       transition: transform 0.2s;
       animation: fadeInUp 0.6s ease forwards;
       opacity: 0;
+      min-height: 180px;
     }
 
     .tile:nth-child(1) { animation-delay: 0.2s; }
@@ -138,6 +140,7 @@
     .tile:nth-child(4) { animation-delay: 0.8s; }
     .tile:nth-child(5) { animation-delay: 1s; }
     .tile:nth-child(6) { animation-delay: 1.2s; }
+    .tile:nth-child(7) { animation-delay: 1.4s; }
 
     .tile:hover {
       transform: translateY(-3px);
@@ -165,6 +168,14 @@
         height: 100%;
       }
     }
+
+    a.more-link {
+      display: inline-block;
+      margin-top: 0.5rem;
+      color: var(--primary);
+      text-decoration: underline;
+      font-size: 0.95rem;
+    }
   </style>
 </head>
 <body>
@@ -176,11 +187,11 @@
   <div class="container">
     <nav class="sidebar hidden" id="sidebar">
       <h2>Seeblick</h2>
-      <a href="#">🏠 Start</a>
-      <a href="#">🍽️ Speisekarte</a>
-      <a href="#">🏡 Restaurant</a>
-      <a href="#">🛏️ Übernachtung</a>
-      <a href="#">📍 Kontakt</a>
+      <a href="https://wecker69.github.io/Seeblick/">🏠 Start</a>
+      <a href="https://wecker69.github.io/Seeblick/Speisekarte">🍽️ Speisekarte</a>
+      <a href="https://wecker69.github.io/Seeblick/Restaurant">🏡 Restaurant</a>
+      <a href="https://wecker69.github.io/Seeblick/Übernachtung">🛏️ Übernachtung</a>
+      <a href="https://wecker69.github.io/Seeblick/Kontakt">📍 Kontakt</a>
     </nav>
 
     <main class="content" id="content">
@@ -198,25 +209,27 @@
         <!-- Öffnungszeiten -->
         <div class="tile">
           <strong>🕒 Öffnungszeiten</strong>
-          <p>Täglich geöffnet von 11:00 bis 22:00 Uhr – durchgehend warme Küche.</p>
+          <p>Täglich geöffnet von 11:00 bis 22:00 Uhr – durchgehend warme Küche, immer frisch zubereitet.</p>
         </div>
 
         <!-- Speisekarte -->
         <div class="tile">
           <strong>📋 Speisekarte</strong>
-          <p>Frische Fischgerichte, regionale Spezialitäten und saisonale Highlights – für jeden Geschmack.</p>
+          <p>Frische Fischgerichte, regionale Spezialitäten und saisonale Highlights – für jeden Geschmack ein Genuss.</p>
+          <a href="https://wecker69.github.io/Seeblick/Speisekarte" class="more-link">Zur Speisekarte</a>
         </div>
 
         <!-- Übernachtung -->
         <div class="tile">
           <strong>🛌 Übernachtung</strong>
-          <p>Unsere gemütlichen Zimmer mit Seeblick laden zum Verweilen ein – auch für längere Aufenthalte.</p>
+          <p>Wachen Sie mit Meeresrauschen auf – unsere charmanten Zimmer laden zum Träumen ein.</p>
+          <a href="https://wecker69.github.io/Seeblick/Übernachtung" class="more-link">Mehr erfahren</a>
         </div>
 
         <!-- Lage -->
         <div class="tile">
           <strong>🗺️ Lage</strong>
-          <p>Promenade 1, Insel Poel</p>
+          <p>Einmalige Lage direkt an der Promenade – perfekt für entspannte Spaziergänge am Wasser.</p>
           <div style="margin: 1rem 0;">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2248.8294084120583!2d11.431829216008727!3d53.999964779119176!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47ad5015e64e9e2d%3A0xb93c63244ce50d36!2sPromenade%201%2C%2018399%20Insel%20Poel!5e0!3m2!1sde!2sde!4v1713709438361!5m2!1sde!2sde"
@@ -228,7 +241,14 @@
               referrerpolicy="no-referrer-when-downgrade">
             </iframe>
           </div>
-          <p style="font-size: 0.85rem; color: #888; margin-top: -0.5rem;">von Google Maps</p>
+          <a href="https://maps.google.com/?q=Promenade+1,+Insel+Poel" target="_blank" class="more-link">Karte in Google Maps öffnen</a>
+        </div>
+
+        <!-- Veranstaltungen -->
+        <div class="tile">
+          <strong>🎉 Veranstaltungen</strong>
+          <p>Ob Familienfeier oder Firmen-Event – wir bieten den perfekten Rahmen für unvergessliche Momente.</p>
+          <a href="https://wecker69.github.io/Seeblick/Veranstaltungen" class="more-link">Jetzt anfragen</a>
         </div>
       </div>
     </main>

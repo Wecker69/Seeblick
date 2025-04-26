@@ -247,6 +247,16 @@
   </div>
 
   <script>
+    // Funktion zur Geräteerkennung
+    function isMobile() {
+      return /Mobi|Android/i.test(navigator.userAgent);
+    }
+
+    // Umleitung bei mobilen Geräten
+    if (isMobile()) {
+      window.location.href = "https://m.example.com"; // Ersetzen Sie dies durch die URL, auf die Sie weiterleiten möchten.
+    }
+
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
       sidebar.classList.toggle('hidden');

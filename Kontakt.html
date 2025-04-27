@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Traditionshaus Seeblick – Insel Poel</title>
+  <title>Kontakt – Traditionshaus Seeblick</title>
   <style>
     :root {
       --main-bg: #fdfaf6;
@@ -108,7 +108,7 @@
         height: 100%;
         width: 100%;
       }
-      
+
       .header {
         display: block;
         padding: 1rem;
@@ -143,51 +143,35 @@
       color: #666;
     }
 
-    .tiles {
+    .contact-info {
       margin-top: 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-    }
-
-    .tile {
-      background-color: var(--tile-bg);
-      padding: 1.5rem;
-      border-radius: 12px;
+      background: var(--tile-bg);
+      padding: 2rem;
+      border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-      transition: transform 0.2s;
-      animation: fadeInUp 0.6s ease forwards;
-      opacity: 0;
+      animation: fadeIn 1s ease;
     }
 
-    .tile:hover {
-      transform: translateY(-3px);
+    .contact-info p {
+      margin: 0.8rem 0;
+      font-size: 1rem;
     }
 
-    .tile:nth-child(1) { animation-delay: 0.2s; }
-    .tile:nth-child(2) { animation-delay: 0.4s; }
-    .tile:nth-child(3) { animation-delay: 0.6s; }
-    .tile:nth-child(4) { animation-delay: 0.8s; }
-
-    .more-link {
-      display: inline-block;
-      margin-top: 0.5rem;
-      color: var(--primary);
-      text-decoration: underline;
-      font-size: 0.95rem;
+    .map {
+      margin-top: 2rem;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
 
-    .tile.lage {
-      padding-bottom: 1rem;
+    iframe {
+      width: 100%;
+      height: 400px;
+      border: 0;
     }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
   </style>
@@ -211,53 +195,29 @@
 
     <main class="content" id="content">
       <div class="hero">
-        <h1>Willkommen im Traditionshaus Seeblick</h1>
-        <p>Genießen Sie unsere Fisch&Fleischgerichte sowie unvergessliche Übernachtungen auf der Insel Poel.</p>
+        <h1>Kontakt</h1>
+        <p>So erreichen Sie uns.</p>
       </div>
 
-      <div class="tiles">
-        <div class="tile">
-          <strong>🕒 Öffnungszeiten und Kontakt</strong>
-          <p>Täglich von 11:00 – 20:00 Uhr</p>
-          <p>Mittwochs ist Ruhetag</p>
-          <p></p>
-          <p>Tel: 038425 42549</p>
-          <p>Email: hallo@tradiotions-seeblick@gmail.com</p>
-        </div>
+      <div class="contact-info">
+        <p><strong>🏡 Adresse:</strong><br>
+        Traditionshaus Seeblick<br>
+        Promenande 1<br>
+        23999 Insel Poel (OT Schwarzer Busch)</p>
 
-        <div class="tile">
-          <strong>🏡 Restaurant</strong>
-          <p>Frische Fischgerichte, regionale Spezialitäten und saisonale Highlights – für jeden Geschmack ein Genuss.</p>
-          <a href="https://wecker69.github.io/Seeblick/Speisekarte" class="more-link">Zur Speisekarte</a>
-        </div>
+        <p><strong>📞 Telefon:</strong><br>
+        038425 42549</p>
 
-        <div class="tile">
-          <strong>🛌 Übernachtung</strong>
-          <p>Wachen Sie mit Meeresrauschen auf – unsere charmanten Zimmer laden zum Träumen ein.</p>
-          <a href="https://wecker69.github.io/Seeblick/Übernachtung" class="more-link">Mehr erfahren</a>
-        </div>
-        
-        <div class="tile lage">
-          <strong>🗺️ Lage</strong>
-          <p>Einmalige Lage direkt an der Promenade – perfekt für entspannte Spaziergänge am Wasser.</p>
-          <p>
-            <strong>Adresse:</strong><br>
-            Promenade 1<br>
-            23999 Insel Poel
-          </p>
-          <div style="margin: 1rem 0;">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2248.8294084120583!2d11.431829216008727!3d53.999964779119176!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47ad5015e64e9e2d%3A0xb93c63244ce50d36!2sPromenade%201%2C%2018399%20Insel%20Poel!5e0!3m2!1sde!2sde!4v1713709438361!5m2!1sde!2sde"
-              width="100%"
-              height="220"
-              style="border:0; border-radius: 8px;"
-              allowfullscreen=""
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-          </div>
-          <a href="https://maps.google.com/?q=Promenade+1,+Insel+Poel" target="_blank" class="more-link">Karte in Google Maps öffnen</a>
-        </div>
+        <p><strong>📧 E-Mail:</strong><br>
+        hallo@traditionshaus-seeblick.de</p>
+
+        <p><strong>🕒 Öffnungszeiten:</strong><br>
+        Täglich 11:00 – 20:00 Uhr<br>
+        Mittwochs Ruhetag</p>
+      </div>
+
+      <div class="map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.9059185884264!2d11.4543216!3d53.9916736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47ab59f4dc71c4b9%3A0xd1d174a6a93eb6cc!2sPromenande%201%2C%2023999%20Insel%20Poel!5e0!3m2!1sde!2sde!4v1714325531796" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </main>
   </div>

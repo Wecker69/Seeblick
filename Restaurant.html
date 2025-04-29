@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Speisekarte – Insel Poel</title>
+  <style>
+    :root {
+      --main-bg: #fdfaf6;
+      --sidebar-bg: #fffdf9;
+      --primary: #a1886e;
+      --accent: #f3e9dd;
+      --tile-bg: #fdf5ec;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--main-bg);
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    .header {
+      background-color: var(--accent);
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .menu-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .social-link {
+      font-size: 1.4rem;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .container {
+      display: flex;
+      position: relative;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 250px;
+      height: 100vh;
+      background-color: var(--sidebar-bg);
+      padding: 2rem 1rem;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      z-index: 10;
+    }
+
+    .sidebar.hidden {
+      transform: translateX(-100%);
+    }
+
+    .sidebar h2 {
+      margin-top: 0;
+      color: var(--primary);
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 0.8rem 1rem;
+      text-decoration: none;
+      color: #444;
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+      transition: background 0.2s;
+    }
+
+    .sidebar a:hover {
+      background-color: var(--accent);
+    }
+
+    .content {
+      flex-grow: 1;
+      width: 100%;
+      padding: 2rem;
+      margin-left: 0;
+      transition: margin-left 0.3s ease;
+      animation: fadeIn 0.6s ease;
+    }
+
+    @media (min-width: 769px) {
+      .sidebar:not(.hidden) ~ .content {
+        margin-left: 250px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        height: 100%;
+      }
+    }
+
+    .hero {
+      background-color: #f6eee5;
+      padding: 2rem;
+      border-radius: 10px;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: 2rem;
+      color: var(--primary);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #666;
+    }
+
+    .tiles {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .tile {
+      background-color: var(--tile-bg);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      transition: transform 0.2s;
+      animation: fadeInUp 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    .tile:hover {
+      transform: translateY(-3px);
+    }
+
+    .tile:nth-child(1) { animation-delay: 0.2s; }
+    .tile:nth-child(2) { animation-delay: 0.4s; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    img {
+      width: 100%;
+      border-radius: 8px;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+    <a class="social-link" href="https://facebook.com" target="_blank" title="Facebook">🔗 Facebook</a>
+  </div>
+
+  <div class="container">
+    <nav class="sidebar hidden" id="sidebar">
+      <h2>Seeblick</h2>
+      <a href="https://wecker69.github.io/Seeblick/">🏠 Start</a>
+      <a href="https://wecker69.github.io/Seeblick/Speisekarte">🍽️ Speisekarte</a>
+      <a href="https://wecker69.github.io/Seeblick/Restaurant">🏡 Restaurant</a>
+      <a href="https://wecker69.github.io/Seeblick/Übernachtung">🛏️ Übernachtung</a>
+      <a href="https://wecker69.github.io/Seeblick/Kontakt">📍 Kontakt</a>
+      <a href="https://wecker69.github.io/Seeblick/Impressum">📝 Impressum</a>
+    </nav>
+
+    <main class="content" id="content">
+      <div class="hero">
+        <h1>Traditionshaus Seeblick</h1>
+      </div>
+
+      <div class="tiles">
+
+        <div class="tile">
+          <strong>☀️ bild</strong>
+          <img src="text.jpg" alt="Außenbereich">
+        </div>
+
+        <div class="tile">
+          <strong>🌊 bild</strong>
+          <img src="text.jpg" alt="Innenbereich">
+        </div>
+        
+        <div class="tile">
+          <strong>🏝️ bild</strong>
+          <img src="text.jpg" alt="Bild">
+        </div>
+        
+        <div class="tile">
+          <strong>🍹 Eine Auswahl unserer Gerichte</strong>
+          <img src="https://lh3.googleusercontent.com/p/AF1QipN8d8_vMFEF3NZF8nGUHKFDRUIlHT2mdZNumvJw=s1360-w1360-h1020-rw" alt="Essen">
+          <img src="https://lh3.googleusercontent.com/p/AF1QipODbNS0UqDgkkO2GaWMHC72oqCDrjQfm_-iogV4=s1360-w1360-h1020-rw" alt="Essen">
+          <img src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4notKdCmLK8vQE3mEeM4fFhoPdvBLnmE4Sskck_ub04Y9I26YEFCIVVnpCDvJJxJ1U81hsr2cfN2Re7YzFKaFCmlE1sQU7i6O5ucjhCM1sgwsncf0B16oXm9_yHnchRKacggrd9a=s1360-w1360-h1020-rw" alt="Essen">
+        </div>
+        
+        <div class="tile">
+          <strong>🗓️ Jetzt einen Tisch reservieren</strong>
+          <p>Tel: 038425 42549</p>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('hidden');
+    }
+  </script>
+</body>
+</html>

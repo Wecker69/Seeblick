@@ -10,13 +10,14 @@
       --sidebar-bg: #fffdf9;
       --primary: #a1886e;
       --accent: #f3e9dd;
-      --tile-bg: #fdf5ec;
+      --tile-bg: #fef6e4;
     }
 
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: var(--main-bg);
+      background: url('https://as2.ftcdn.net/v2/jpg/05/19/00/73/1000_F_519007384_eoQXBYwERWVWzFbXoAfBqwD4x2VXKq0i.jpg') no-repeat center center fixed;
+      background-size: cover;
       color: #333;
       overflow-x: hidden;
     }
@@ -109,7 +110,7 @@
     }
 
     .hero {
-      background-color: #f6eee5;
+      background-color: rgba(246, 238, 229, 0.95);
       padding: 2rem;
       border-radius: 10px;
       text-align: center;
@@ -142,6 +143,7 @@
       transition: transform 0.2s;
       animation: fadeInUp 0.6s ease forwards;
       opacity: 0;
+      position: relative;
     }
 
     .tile:hover {
@@ -153,16 +155,15 @@
     .tile:nth-child(3) { animation-delay: 0.6s; }
     .tile:nth-child(4) { animation-delay: 0.8s; }
 
-    .more-link {
-      display: inline-block;
-      margin-top: 0.5rem;
-      color: var(--primary);
-      text-decoration: underline;
-      font-size: 0.95rem;
-    }
-
     .tile.lage {
       padding-bottom: 1rem;
+    }
+
+    .contact-image {
+      margin: 1rem 0;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
     }
 
     @keyframes fadeIn {
@@ -201,17 +202,19 @@
 
       <div class="tiles">
         <div class="tile">
-          <strong>🕒 Öffnungszeiten und Kontakt</strong>
-          <p>Täglich von 11:00 Uhr – 20:30 Uhr</p>#
-          <p>20:00 Uhr Küchenschluss</p>
-          <p>Mittwochs ist Ruhetag</p>
-          <p></p>
-          <p>Tel: 038425 42549</p>
-          <p>Email: hallo@traditionshaus-seeblick.de</p>
+          <strong>🏡 Traditionshaus Seeblick</strong>
+          
+          <img class="contact-image" src="https://www.insel-poel.de/bilder/restaurants/traditionshaus-seeblick-310.jpg" alt="Restaurant Bild" />
+          
+          <div>Täglich von 11:00 Uhr – 20:30 Uhr</div>
+          <div>20:00 Uhr Küchenschluss</div>
+          <div>Mittwochs ist Ruhetag</div>
+          <div>Tel: 038425 42549</div>
+          <div>Email: hallo@traditionshaus-seeblick.de</div>
         </div>
 
         <div class="tile">
-          <strong>🏡 Restaurant</strong>
+          <strong>🍽️ Restaurant</strong>
           <p>Mit regionalen Speisen und diversen Fischspezialitäten bringen wir Ihnen die Ostsee etwas näher.</p>
           <a href="https://wecker69.github.io/Seeblick/Speisekarte" class="more-link">Zur Speisekarte</a>
         </div>
@@ -228,8 +231,7 @@
           <p>
             <strong>Adresse:</strong><br>
             Promenade 1<br>
-            23999 Ostseebad Insel Poel 
-            (OT Am Schwarzen Busch)
+            23999 Ostseebad Insel Poel (OT Am Schwarzen Busch)
           </p>
           <div style="margin: 1rem 0;">
             <iframe
@@ -249,12 +251,10 @@
   </div>
 
   <script>
-    // Funktion zur Geräteerkennung
     function isMobile() {
       return /Mobi|Android/i.test(navigator.userAgent);
     }
 
-    // Umleitung bei mobilen Geräten
     if (isMobile()) {
       window.location.href = "https://wecker69.github.io/Seeblick/Kontakt";
     }

@@ -3,231 +3,174 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Speisekarte – Insel Poel</title>
+  <title>Orte auf der Karte</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
-    :root {
-      --main-bg: #fdfaf6;
-      --sidebar-bg: #fffdf9;
-      --primary: #a1886e;
-      --accent: #f3e9dd;
-      --tile-bg: #fdf5ec;
-    }
-
-    body {
+    body, html {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: var(--main-bg);
-      color: #333;
-      overflow-x: hidden;
+      padding: 0;
+      height: 100%;
+      font-family: sans-serif;
     }
 
-    .header {
-      background-color: var(--accent);
-      padding: 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #ddd;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+    #map {
+      height: 100vh;
+      width: 100%;
     }
 
-    .menu-btn {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-
-    .social-link {
-      font-size: 1.4rem;
-      color: var(--primary);
-      text-decoration: none;
-    }
-
-    .container {
-      display: flex;
-      position: relative;
-    }
-
-    .sidebar {
-      position: fixed;
+    #header {
+      position: absolute;
       top: 0;
       left: 0;
-      width: 250px;
-      height: 100vh;
-      background-color: var(--sidebar-bg);
-      padding: 2rem 1rem;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.05);
-      transition: transform 0.3s ease, opacity 0.3s ease;
-      z-index: 10;
-    }
-
-    .sidebar.hidden {
-      transform: translateX(-100%);
-    }
-
-    .sidebar h2 {
-      margin-top: 0;
-      color: var(--primary);
-    }
-
-    .sidebar a {
-      display: block;
-      padding: 0.8rem 1rem;
-      text-decoration: none;
-      color: #444;
-      border-radius: 6px;
-      margin-bottom: 0.5rem;
-      transition: background 0.2s;
-    }
-
-    .sidebar a:hover {
-      background-color: var(--accent);
-    }
-
-    .content {
-      flex-grow: 1;
       width: 100%;
-      padding: 2rem;
-      margin-left: 0;
-      transition: margin-left 0.3s ease;
-      animation: fadeIn 0.6s ease;
-    }
-
-    @media (min-width: 769px) {
-      .sidebar:not(.hidden) ~ .content {
-        margin-left: 250px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .sidebar {
-        height: 100%;
-      }
-    }
-
-    .hero {
-      background-color: #f6eee5;
-      padding: 2rem;
-      border-radius: 10px;
-      text-align: center;
-      animation: fadeIn 1s ease-in-out;
-    }
-
-    .hero h1 {
-      margin: 0;
-      font-size: 2rem;
-      color: var(--primary);
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      color: #666;
-    }
-
-    .tiles {
-      margin-top: 2rem;
+      background: #333;
+      color: white;
+      padding: 10px 15px;
+      z-index: 1001;
       display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
+      align-items: center;
     }
 
-    .tile {
-      background-color: var(--tile-bg);
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-      transition: transform 0.2s;
-      animation: fadeInUp 0.6s ease forwards;
-      opacity: 0;
+    #toggleSidebar {
+      background: #555;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 4px;
     }
 
-    .tile:hover {
-      transform: translateY(-3px);
+    #sidebar {
+      position: absolute;
+      top: 50px; /* unter dem Header */
+      left: 0;
+      width: 250px;
+      height: calc(100% - 50px);
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+      padding: 15px;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 1000;
     }
 
-    .tile:nth-child(1) { animation-delay: 0.2s; }
-    .tile:nth-child(2) { animation-delay: 0.4s; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    #sidebar.visible {
+      transform: translateX(0);
     }
 
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    #sidebar h3 {
+      margin-top: 0;
     }
 
-    img {
-      width: 100%;
-      border-radius: 8px;
-      margin-top: 0.5rem;
+    #sidebar label {
+      display: block;
+      margin: 8px 0;
+    }
+
+    #sidebar input {
+      margin-right: 8px;
     }
   </style>
 </head>
 <body>
-  <div class="header">
-    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
-    <a class="social-link" href="https://facebook.com" target="_blank" title="Facebook">🔗 Facebook</a>
+  <div id="header">
+    <button id="toggleSidebar">☰ Legende</button>
   </div>
 
-  <div class="container">
-    <nav class="sidebar hidden" id="sidebar">
-      <h2>Seeblick</h2>
-      <a href="https://wecker69.github.io/Seeblick/">🏠 Start</a>
-      <a href="https://wecker69.github.io/Seeblick/Speisekarte">🍽️ Speisekarte</a>
-      <a href="https://wecker69.github.io/Seeblick/Restaurant">🏡 Restaurant</a>
-      <a href="https://wecker69.github.io/Seeblick/Übernachtung">🛏️ Übernachtung</a>
-      <a href="https://wecker69.github.io/Seeblick/Kontakt">📍 Kontakt</a>
-      <a href="https://wecker69.github.io/Seeblick/Impressum">📝 Impressum</a>
-    </nav>
-
-    <main class="content" id="content">
-      <div class="hero">
-        <h1>Traditionshaus Seeblick</h1>
-      </div>
-
-      <div class="tiles">
-
-        <div class="tile">
-          <strong>☀️ bild</strong>
-          <img src="text.jpg" alt="Außenbereich">
-        </div>
-
-        <div class="tile">
-          <strong>🌊 bild</strong>
-          <img src="text.jpg" alt="Innenbereich">
-        </div>
-        
-        <div class="tile">
-          <strong>🏝️ bild</strong>
-          <img src="text.jpg" alt="Bild">
-        </div>
-        
-        <div class="tile">
-          <strong>🍹 Eine Auswahl unserer Gerichte</strong>
-          <img src="https://lh3.googleusercontent.com/p/AF1QipN8d8_vMFEF3NZF8nGUHKFDRUIlHT2mdZNumvJw=s1360-w1360-h1020-rw" alt="Essen">
-          <img src="https://lh3.googleusercontent.com/p/AF1QipODbNS0UqDgkkO2GaWMHC72oqCDrjQfm_-iogV4=s1360-w1360-h1020-rw" alt="Essen">
-          <img src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4notKdCmLK8vQE3mEeM4fFhoPdvBLnmE4Sskck_ub04Y9I26YEFCIVVnpCDvJJxJ1U81hsr2cfN2Re7YzFKaFCmlE1sQU7i6O5ucjhCM1sgwsncf0B16oXm9_yHnchRKacggrd9a=s1360-w1360-h1020-rw" alt="Essen">
-        </div>
-        
-        <div class="tile">
-          <strong>🗓️ Jetzt einen Tisch reservieren</strong>
-          <p>Tel: 038425 42549</p>
-        </div>
-
-      </div>
-    </main>
+  <div id="sidebar">
+    <h3>Legende</h3>
+    <label><input type="checkbox" id="toiletten" checked> Toiletten</label>
+    <label><input type="checkbox" id="strand" checked> Strände</label>
+    <label><input type="checkbox" id="restaurant" checked> Restaurants</label>
+    <label><input type="checkbox" id="ferienwohnung" checked> Ferienwohnungen</label>
+    <label><input type="checkbox" id="parkplatz" checked> Parkplätze</label>
   </div>
 
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      sidebar.classList.toggle('hidden');
+    document.getElementById('toggleSidebar').addEventListener('click', () => {
+      document.getElementById('sidebar').classList.toggle('visible');
+    });
+
+    const poelLat = 53.99243;
+    const poelLng = 11.45000;
+
+    const map = L.map('map').setView([poelLat, poelLng], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap-Mitwirkende'
+    }).addTo(map);
+
+    const bounds = [
+      [53.02, 11.31],
+      [54.06, 11.52]
+    ];
+    map.setMaxBounds(bounds);
+
+    const icons = {
+      'Ferienwohnung': L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png', iconSize: [30, 30] }),
+      'Strand': L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/2933/2933186.png', iconSize: [30, 30] }),
+      'Restaurant': L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/128/3170/3170733.png', iconSize: [30, 30] }),
+      'Toilette': L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/619/619153.png', iconSize: [30, 30] }),
+      'Parkplatz': L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/535/535137.png', iconSize: [30, 30] }),
+    };
+
+    const orte = [
+      { name: "Strand A", typ: "Strand", lat: 54.123, lng: 11.123 },
+      { name: "Strandperle", typ: "Restaurant", lat: 54.01450, lng: 11.42699 },
+      { name: "Ferienwohnung Seeblick", typ: "Ferienwohnung", lat: 54.125, lng: 11.121 },
+      { name: "Öffentliche Toilette", typ: "Toilette", lat: 54.127, lng: 11.124 },
+      { name: "Parkplatz Nord", typ: "Parkplatz", lat: 54.128, lng: 11.126 },
+    ];
+
+    const markers = {
+      'Strand': [],
+      'Restaurant': [],
+      'Ferienwohnung': [],
+      'Toilette': [],
+      'Parkplatz': []
+    };
+
+    orte.forEach(ort => {
+      const marker = L.marker([ort.lat, ort.lng], { icon: icons[ort.typ] || undefined })
+        .bindPopup(`<strong>${ort.name}</strong><br>Typ: ${ort.typ}`);
+      markers[ort.typ].push(marker);
+      marker.addTo(map);
+    });
+
+    function toggleMarkers(category, show) {
+      markers[category].forEach(marker => {
+        if (show) {
+          map.addLayer(marker);
+        } else {
+          map.removeLayer(marker);
+        }
+      });
     }
+
+    document.getElementById('toiletten').addEventListener('change', (e) => {
+      toggleMarkers('Toilette', e.target.checked);
+    });
+    document.getElementById('strand').addEventListener('change', (e) => {
+      toggleMarkers('Strand', e.target.checked);
+    });
+    document.getElementById('restaurant').addEventListener('change', (e) => {
+      toggleMarkers('Restaurant', e.target.checked);
+    });
+    document.getElementById('ferienwohnung').addEventListener('change', (e) => {
+      toggleMarkers('Ferienwohnung', e.target.checked);
+    });
+    document.getElementById('parkplatz').addEventListener('change', (e) => {
+      toggleMarkers('Parkplatz', e.target.checked);
+    });
+
+    toggleMarkers('Toilette', true);
+    toggleMarkers('Strand', true);
+    toggleMarkers('Restaurant', true);
+    toggleMarkers('Ferienwohnung', true);
+    toggleMarkers('Parkplatz', true);
   </script>
 </body>
 </html>

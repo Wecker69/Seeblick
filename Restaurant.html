@@ -13,49 +13,54 @@
       font-family: sans-serif;
     }
 
-    #map {
-      height: 100vh;
-      width: 100%;
-    }
-
-    #header {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
+    header {
+      height: 60px;
       background: #333;
       color: white;
-      padding: 10px 15px;
-      z-index: 1001;
       display: flex;
       align-items: center;
-    }
-
-    #toggleSidebar {
-      background: #555;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      cursor: pointer;
-      border-radius: 4px;
-    }
-
-    #sidebar {
-      position: absolute;
-      top: 50px; /* unter dem Header */
+      padding: 0 1rem;
+      position: fixed;
+      top: 0;
       left: 0;
-      width: 250px;
-      height: calc(100% - 50px);
-      background: rgba(255, 255, 255, 0.95);
-      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
-      padding: 15px;
-      transform: translateX(-100%);
-      transition: transform 0.3s ease;
+      right: 0;
       z-index: 1000;
     }
 
-    #sidebar.visible {
+    #toggleSidebar {
+      background: #FFFFFF;
+      color: black;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #sidebar {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: 250px;
+      height: calc(100% - 60px);
+      background: white;
+      padding: 10px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      z-index: 999;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+
+    #sidebar.open {
       transform: translateX(0);
+    }
+
+    #map {
+      position: absolute;
+      top: 60px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
     }
 
     #sidebar h3 {
@@ -64,18 +69,22 @@
 
     #sidebar label {
       display: block;
-      margin: 8px 0;
+      margin-bottom: 5px;
     }
 
     #sidebar input {
       margin-right: 8px;
     }
+
+    small a {
+      font-size: 0.85em;
+    }
   </style>
 </head>
 <body>
-  <div id="header">
-    <button id="toggleSidebar">☰ Legende</button>
-  </div>
+  <header>
+    <button id="toggleSidebar">☰ Filter</button>
+  </header>
 
   <div id="sidebar">
     <h3>Legende</h3>
@@ -84,6 +93,13 @@
     <label><input type="checkbox" id="restaurant" checked> Restaurants</label>
     <label><input type="checkbox" id="ferienwohnung" checked> Ferienwohnungen</label>
     <label><input type="checkbox" id="parkplatz" checked> Parkplätze</label>
+    <label><input type="checkbox" id="sehenswuerdigkeit" checked> Sehenswürdigkeiten</label>
+    <label><input type="checkbox" id="bushaltestelle" checked> Bushaltestellen</label>
+    <label><input type="checkbox" id="museum" checked> Museen</label>
+    <label><input type="checkbox" id="supermarkt" checked> Supermärkte</label>
+    <label><input type="checkbox" id="gesundheit" checked> Gesundheit</label>
+    <label><input type="checkbox" id="camping" checked> Campingplätze</label>
+    <label><input type="checkbox" id="touristeninfo" checked> Touristen-Info</label>
   </div>
 
   <div id="map"></div>
@@ -91,38 +107,40 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
     document.getElementById('toggleSidebar').addEventListener('click', () => {
-      document.getElementById('sidebar').classList.toggle('visible');
+      document.getElementById('sidebar').classList.toggle('open');
     });
 
     const poelLat = 53.99243;
     const poelLng = 11.45000;
-
     const map = L.map('map').setView([poelLat, poelLng], 13);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap-Mitwirkende'
     }).addTo(map);
 
-    const bounds = [
-      [53.02, 11.31],
-      [54.06, 11.52]
-    ];
-    map.setMaxBounds(bounds);
+    map.setMaxBounds([
+      [53.88, 11.25],
+      [54.08, 11.61]
+    ]);
 
     const icons = {
       'Ferienwohnung': L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png', iconSize: [30, 30] }),
       'Strand': L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/2933/2933186.png', iconSize: [30, 30] }),
-      'Restaurant': L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/128/3170/3170733.png', iconSize: [30, 30] }),
+      'Restaurant': L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/128/5193/5193679.png', iconSize: [30, 30] }),
       'Toilette': L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/619/619153.png', iconSize: [30, 30] }),
       'Parkplatz': L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/535/535137.png', iconSize: [30, 30] }),
+      'Sehenswürdigkeit': L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/854/854878.png', iconSize: [30, 30] }),
+      'Bushaltestelle': L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/2972/2972821.png', iconSize: [30, 30] }),
+      'Museum': L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/3448/3448609.png', iconSize: [30, 30] }),
+      'Supermarkt': L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/1046/1046784.png', iconSize: [30, 30] }),
+      'Gesundheit': L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/2965/2965567.png', iconSize: [30, 30] }),
+      'Campingplatz': L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/535/535239.png', iconSize: [30, 30] }),
+      'Touristen-Info': L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/235/235861.png', iconSize: [30, 30] }),
     };
 
     const orte = [
-      { name: "Strand A", typ: "Strand", lat: 54.123, lng: 11.123 },
-      { name: "Strandperle", typ: "Restaurant", lat: 54.01450, lng: 11.42699 },
-      { name: "Ferienwohnung Seeblick", typ: "Ferienwohnung", lat: 54.125, lng: 11.121 },
-      { name: "Öffentliche Toilette", typ: "Toilette", lat: 54.127, lng: 11.124 },
-      { name: "Parkplatz Nord", typ: "Parkplatz", lat: 54.128, lng: 11.126 },
+      { name: "Seeperle", typ: "Restaurant", lat: 54.01449, lng: 11.42699, beschreibung: "Regionale Spezialitäten direkt am Meer", website: "" },
+      { name: "Traditionshaus Seeblick", typ: "Restaurant", lat: 54.01453, lng: 11.42902, beschreibung: "Regionale Spezialitäten direkt am Meer", website: "https://wecker69.github.io/Seeblick/" },
     ];
 
     const markers = {
@@ -130,12 +148,25 @@
       'Restaurant': [],
       'Ferienwohnung': [],
       'Toilette': [],
-      'Parkplatz': []
+      'Parkplatz': [],
+      'Sehenswürdigkeit': [],
+      'Bushaltestelle': [],
+      'Museum': [],
+      'Supermarkt': [],
+      'Gesundheit': [],
+      'Campingplatz': [],
+      'Touristen-Info': []
     };
 
     orte.forEach(ort => {
+      const popupHTML = `
+        <strong>${ort.name}</strong><br>
+        Typ: ${ort.typ}<br>
+        ${ort.beschreibung || ''}<br>
+        ${ort.website ? `<small><a href="${ort.website}" target="_blank">Website</a></small>` : ''}
+      `;
       const marker = L.marker([ort.lat, ort.lng], { icon: icons[ort.typ] || undefined })
-        .bindPopup(`<strong>${ort.name}</strong><br>Typ: ${ort.typ}`);
+        .bindPopup(popupHTML);
       markers[ort.typ].push(marker);
       marker.addTo(map);
     });
@@ -150,27 +181,24 @@
       });
     }
 
-    document.getElementById('toiletten').addEventListener('change', (e) => {
-      toggleMarkers('Toilette', e.target.checked);
-    });
-    document.getElementById('strand').addEventListener('change', (e) => {
-      toggleMarkers('Strand', e.target.checked);
-    });
-    document.getElementById('restaurant').addEventListener('change', (e) => {
-      toggleMarkers('Restaurant', e.target.checked);
-    });
-    document.getElementById('ferienwohnung').addEventListener('change', (e) => {
-      toggleMarkers('Ferienwohnung', e.target.checked);
-    });
-    document.getElementById('parkplatz').addEventListener('change', (e) => {
-      toggleMarkers('Parkplatz', e.target.checked);
-    });
+    document.getElementById('toiletten').addEventListener('change', e => toggleMarkers('Toilette', e.target.checked));
+    document.getElementById('strand').addEventListener('change', e => toggleMarkers('Strand', e.target.checked));
+    document.getElementById('restaurant').addEventListener('change', e => toggleMarkers('Restaurant', e.target.checked));
+    document.getElementById('ferienwohnung').addEventListener('change', e => toggleMarkers('Ferienwohnung', e.target.checked));
+    document.getElementById('parkplatz').addEventListener('change', e => toggleMarkers('Parkplatz', e.target.checked));
+    document.getElementById('sehenswuerdigkeit').addEventListener('change', e => toggleMarkers('Sehenswürdigkeit', e.target.checked));
+    document.getElementById('bushaltestelle').addEventListener('change', e => toggleMarkers('Bushaltestelle', e.target.checked));
+    document.getElementById('museum').addEventListener('change', e => toggleMarkers('Museum', e.target.checked));
+    document.getElementById('supermarkt').addEventListener('change', e => toggleMarkers('Supermarkt', e.target.checked));
+    document.getElementById('gesundheit').addEventListener('change', e => toggleMarkers('Gesundheit', e.target.checked));
+    document.getElementById('camping').addEventListener('change', e => toggleMarkers('Campingplatz', e.target.checked));
+    document.getElementById('touristeninfo').addEventListener('change', e => toggleMarkers('Touristen-Info', e.target.checked));
 
-    toggleMarkers('Toilette', true);
-    toggleMarkers('Strand', true);
-    toggleMarkers('Restaurant', true);
-    toggleMarkers('Ferienwohnung', true);
-    toggleMarkers('Parkplatz', true);
+    [
+      'Toilette', 'Strand', 'Restaurant', 'Ferienwohnung', 'Parkplatz',
+      'Sehenswürdigkeit', 'Bushaltestelle', 'Museum', 'Supermarkt',
+      'Gesundheit', 'Campingplatz', 'Touristen-Info'
+    ].forEach(cat => toggleMarkers(cat, true));
   </script>
 </body>
 </html>
